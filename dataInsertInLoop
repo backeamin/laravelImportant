@@ -1,0 +1,28 @@
+// blade file e rokom loop calaite hobe
+
+              @foreach($pcs as $pc)
+                          <div class="row border-bottom align-items-center">
+                              <div class="col-1">{{$loop->iteration}}.</div>
+                              <div class="col-md-7">
+                                  @if($loop->iteration == 1 || $loop->iteration == 2)
+                                      <input type="month" name="pm_{{ $pc->id }}" style="border: unset">
+                                  @endif
+                                  {{$pc->title}}</div>
+                              <div class="col-md-4"><input type="number" name="pc_{{$pc->id}}" id="pc_{{ $loop->iteration }}" onkeyup="calculateTotal()" class="form-control" placeholder="/="></div>
+                          </div>
+                      @endforeach
+// controller code
+
+                            foreach ($payment_categories as $item){
+            $field_name = "pc_" . $item->id;
+            $field_month_name = "pm_" . $item->id;
+            if ($request->$field_name){
+              Payment::create([
+                 'payment_category_id' => $item->id,
+                 'invoice' => $invoice->id,
+                 'amount' => $request->$field_name,
+                 'month' => $request->$field_month_name,
+              ]);
+              $total += $request->$field_name;
+            }
+        }
