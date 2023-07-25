@@ -1,0 +1,6 @@
+// ei function ta laravel helper er vitore rakhte hobe
+
+function dateMaker($date, $format)
+{
+    return date_format(date_create($date), $format);
+}
