@@ -1,9 +1,9 @@
-// loop Serial Not changeable to add this code
+// Pagination Serial Not changeable On loop to add this code
 <td scope="row"> {{ ($admissions->currentpage()-1) * $admissions->perpage() + $loop->iteration }}</td>
 //
 
 
-//looop with search
+//Pagination with search
 
 {{ $admissions->appends(request()->input())->links() }}
 ///
