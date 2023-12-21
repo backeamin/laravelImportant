@@ -1,0 +1,17 @@
+function findMonthToAllDate($month)
+{
+    $start_date = $month . '-01';
+    $end_date = date("Y-m-t", strtotime($start_date));
+
+    $target = strtotime($start_date);
+    $workingDate = [];
+    while ($target <= strtotime(date("Y-m-d", strtotime($end_date)))) {
+        $temp = [];
+        $temp['date'] = date('Y-m-d', $target);
+        $temp['day'] = date('d', $target);
+        $temp['day_name'] = date('D', $target);
+        $workingDate[] = $temp;
+        $target += (60 * 60 * 24);
+    }
+    return $workingDate;
+}
