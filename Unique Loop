@@ -1,0 +1,3 @@
+@foreach($payments->unique('admission_id') as $payment)
+<td>{{$payment->admission_id}}</td>
+@endforeach
