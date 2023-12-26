@@ -1,3 +1,9 @@
 @foreach($payments->unique('admission_id') as $payment)
 <td>{{$payment->admission_id}}</td>
 @endforeach
+
+
+//unique with function
+@forelse($payments->unique(function($payment) {
+            return $payment->created_at->format('Y-m-d');
+            }) as $payment)
