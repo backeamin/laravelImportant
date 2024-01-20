@@ -1,0 +1,35 @@
+ $options = Option::all();
+        foreach ($options as $option){
+            $make_field_name = $option->title;
+            if ($make_field_name == 'logo' || $make_field_name == 'icon' || $make_field_name == 'banner'){
+                if (empty($request->$make_field_name)){
+                    continue;
+                }
+                Storage::delete($option->value);
+                $path = $request->file($make_field_name)->store($make_field_name);
+
+                // make public path
+                $public_path = public_path('storage/' . $path);
+                if ($make_field_name == 'logo'){
+                    Image::make($public_path)->resize(null, 50, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($public_path);
+                }
+                if ($make_field_name == 'icon'){
+                    Image::make($public_path)->resize(30, 30)->save($public_path);
+                }
+                if ($make_field_name == 'banner'){
+                    Image::make($public_path)->resize(940, 788)->save($public_path);
+                }
+                // update path
+                $option->value = $path;
+                $option->save();
+
+                // continue loop
+                continue;
+            }
+            $option->value = $request->$make_field_name;
+            $option->save();
+        }
+        Toastr::success('Option Updated');
+        return back();
