@@ -1,18 +1,18 @@
-to delete duplicate user details
-//        iWantToUseGroupBy();
-//        $kuddu = UserDetails::select('user_id')->groupBy('user_id')->havingRaw("COUNT('user_id') > 1")->get();
-//        foreach ($kuddu as $ku){
-//            $last = UserDetails::where('user_id', $ku->user_id)->orderBy('id', 'desc')->first();
-//            if ($last){
-//                UserDetails::where([
-//                    ['user_id', $ku->user_id],
-//                    ['id', '!=', $last->id]
-//                ])->delete();
-//            }
-//        }
+// to delete duplicate user details
+      iWantToUseGroupBy();
+       $kuddu = UserDetails::select('user_id')->groupBy('user_id')->havingRaw("COUNT('user_id') > 1")->get();
+       foreach ($kuddu as $ku){
+           $last = UserDetails::where('user_id', $ku->user_id)->orderBy('id', 'desc')->first();
+            if ($last){
+               UserDetails::where([
+                   ['user_id', $ku->user_id],
+                    ['id', '!=', $last->id]
+                ])->delete();
+            }
+         }
 
 
-// groupby function 
+  groupby function 
 function iWantToUseGroupBy(){
     DB::statement("SET SQL_MODE=''");
 }
