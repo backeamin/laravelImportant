@@ -33,3 +33,22 @@
         }
         Toastr::success('Option Updated');
         return back();
+
+
+// schema 
+
+ Schema::create('options', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('value')->nullable();
+            $table->timestamps();
+        });
+
+
+
+//helpers
+function getOptionData($title)
+{
+    $option = Option::where('title', $title)->first();
+    return $option->value;
+}
