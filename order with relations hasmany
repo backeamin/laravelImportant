@@ -1,0 +1,14 @@
+public function orderSearch($request)
+    {
+        $query = Client::query();
+        if ($request->has('projects_order')) {
+            $query->withCount('client_projects')->orderBy('client_projects_count', $request->projects_order);
+        }
+        if ($request->has('follows_order')) {
+            $query->withCount('follows')->orderBy('follows_count', $request->follows_order);
+        }
+        if ($request->has('schedules_order')) {
+            $query->withCount('schedules')->orderBy('schedules_count', $request->schedules_order);
+        }
+        return $query;
+    }
