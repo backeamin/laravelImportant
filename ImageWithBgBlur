@@ -1,0 +1,46 @@
+ if ($request->image) {
+            $file = $request->file("image");
+
+            $image = $file->store("media_image");
+            $thumbnail = $file->store("media_thumbnail");
+            $xs_thumbnail = $file->store("media_xs");
+
+            $image_public_path = public_path('storage/' . $image);
+            $thumbnail_public_path = public_path('storage/' . $thumbnail);
+            $xs_thumbnail_public_path = public_path('storage/' . $xs_thumbnail);
+
+            // Master Image
+            $canvas = Image::canvas(648, 486);
+            $resized = Image::make($image_public_path)->resize(648, 486, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $blur_bg = Image::make($image_public_path)->fit(648, 486)->blur(30);
+            $canvas = $blur_bg->insert($resized, 'center');
+            $canvas->save($image_public_path);
+
+            // Thumbnail
+            $canvas = Image::canvas(312, 234);
+            $resized = Image::make($thumbnail_public_path)->resize(312, 234, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $blur_bg = Image::make($thumbnail_public_path)->fit(312, 234)->blur(30);
+            $canvas = $blur_bg->insert($resized, 'center');
+            $canvas->save($thumbnail_public_path);
+
+            // XS Thumbnail
+            $canvas = Image::canvas(150, 112);
+            $resized = Image::make($xs_thumbnail_public_path)->resize(150, 112, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $blur_bg = Image::make($xs_thumbnail_public_path)->fit(150, 112)->blur(30);
+            $canvas = $blur_bg->insert($resized, 'center');
+            $canvas->save($xs_thumbnail_public_path);
+
+            $media->image = $image;
+            $media->thumbnail = $thumbnail;
+            $media->xs_thumbnail = $xs_thumbnail;
+            $media->save();
+        }
