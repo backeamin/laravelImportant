@@ -1,0 +1,7 @@
+//php list command in macbook homebrew
+brew list | grep php
+
+//php switch one to another 
+brew unlink php@8.1
+brew link php@8.2 --force --overwrite
+
