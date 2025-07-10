@@ -5,3 +5,6 @@ brew list | grep php
 brew unlink php@8.1
 brew link php@8.2 --force --overwrite
 
+// install any version of php
+brew search php
+brew install php@8.0
