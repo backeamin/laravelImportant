@@ -1,0 +1,2 @@
+//select php virsion and switch any type of virsion installed
+sudo update-alternatives --config php
